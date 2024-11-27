@@ -13,7 +13,6 @@ const authMiddleWare =(req,res,next)=>{
     try{
         const decode = jwt.verify(token,JWTToken);
         req.userID = decode.user;
-        console.log(decode,"vale 2");
         next();
     }
     catch(err){

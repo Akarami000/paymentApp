@@ -11,7 +11,6 @@ const jwtVerify = require('../../middleware/jwtVerify');
 router.get('/user', jwtVerify, async (req, res) => {
     try {
       // Use `req.user` assuming it contains the user ID
-      console.log('rq',req.user)
       const user = await User.findById(req.user).select('-password'); // select(-password) to exclude password and using findById to search user by _id
       res.json({ user }); 
     } catch (err) {

@@ -33,7 +33,6 @@ router.put('/update-user', [
                 password : hashedPassword } }  // Update fields from req.body
         );
 
-        console.log('Testing put request');
         res.json({ message: "Updated Successfully", user: updatedUser });
     } catch (err) {
         console.error(err);

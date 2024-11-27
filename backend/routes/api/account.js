@@ -38,7 +38,6 @@ try{//  startSession():
 //	•	Begins a MongoDB session.
 //	•	A session allows you to group multiple operations into a single transaction.
     const session = await mongoose.startSession() //** Sets the session. Useful for [transactions](/docs/transactions.html). */
-    console.log('test2')
 //startTransaction():
 //•	Starts a transaction within the session.
 //•	A transaction ensures that all operations inside it are treated as a single unit. If any operation fails, all changes made during the transaction can be rolled back.
@@ -63,7 +62,6 @@ try{//  startSession():
     await Account.updateOne({userId:req.userID},{$inc:{balance:-amount}}).session(session);
     await Account.updateOne({userId:to},{$inc:{balance:amount}}).session(session);
 
-    console.log("test1")
     //commit the transaction 
     await session.commitTransaction();
     res.json({
