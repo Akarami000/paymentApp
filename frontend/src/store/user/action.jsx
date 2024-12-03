@@ -14,5 +14,4 @@ export const CreateUser = createAsyncThunk('user/fetchUser',async(userData,{reje
     }
 })
 
-//slice for userState
 
