@@ -6,7 +6,7 @@ import { Heading } from './shared/Heading';
 import { InputBox } from './shared/InputBox';
 import {useDispatch,useSelector} from 'react-redux';
 import { LoginUser } from '../store/user/action';
-import { ErrorMessage } from './shared/ErrorMessage';
+import { ErrorMessage,SideErrorMessage } from './shared/ErrorMessage';
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -31,7 +31,15 @@ const SignIn = () => {
     >
       <Heading label={"Sign-In"}/>
       <ErrorMessage message={error ? error.message:null}/>
-      <InputBox label={"Email"} 
+      <br/>
+      <SideErrorMessage
+            message={
+                error && error.errors
+                    ? error.errors.find(val => val.path === 'email')?.msg
+                    : null
+            }
+        />  
+        <InputBox label={"Email"} 
                 placeholder={"Enter your email"}
                 type={"email"}
                 id={"email"} 
@@ -46,7 +54,7 @@ const SignIn = () => {
                 data={formData.password} 
                 method={handleChange} />
       
-    <Button loading={loading} loadingValue ={"Loading..."} signUp={"Sign-In"}  /> 
+    <Button loading={loading} loadingValue ={"Loading ..."} signUp={"Sign-In"}  /> 
    <Bottom message= {"I don't have account "} name={"Sign-Up"} link={'/sign-up'} />
     </form>
     

@@ -10,3 +10,14 @@ export const ErrorMessage=({message})=>{
         </div>
     )
 }
+
+export const SideErrorMessage=({message})=>{
+    if (!message) return null;
+    return(
+        <div className='w-full'>
+        <label htmlFor='sign-in' className=' text-center  text-red-600 font-thin '>
+            {message}
+        </label>
+        </div>
+    )
+}
