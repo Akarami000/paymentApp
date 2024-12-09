@@ -4,9 +4,13 @@ import { Bottom } from './shared/Bottom';
 import { Button } from './shared/Button';
 import { Heading } from './shared/Heading';
 import { InputBox } from './shared/InputBox';
-
+import {useDispatch,useSelector} from 'react-redux';
+import { LoginUser } from '../store/user/action';
+import { ErrorMessage } from './shared/ErrorMessage';
 
 const SignIn = () => {
+    const dispatch = useDispatch();
+    const {loading,error,user} = useSelector((state)=>state.user);
     const [formData,setFromData] = useState({
         email:'',
         password:''
@@ -17,17 +21,16 @@ const SignIn = () => {
     const handleSubmit=(e)=>{
         e.preventDefault();
         const userData = formData;
-        console.log(userData);
-
+        dispatch(LoginUser(userData));
     }
 
-    const loading = false;
   return (
     <div className="h-screen flex justify-center items-center bg-gray-900">
     <form className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"
     onSubmit={handleSubmit}
     >
       <Heading label={"Sign-In"}/>
+      <ErrorMessage message={error ? error.message:null}/>
       <InputBox label={"Email"} 
                 placeholder={"Enter your email"}
                 type={"email"}
@@ -43,7 +46,7 @@ const SignIn = () => {
                 data={formData.password} 
                 method={handleChange} />
       
-    <Button loading={loading} loadingValue ={"Creating user ..."} signUp={"Sign-In"}  /> 
+    <Button loading={loading} loadingValue ={"Loading..."} signUp={"Sign-In"}  /> 
    <Bottom message= {"I don't have account "} name={"Sign-Up"} link={'/sign-up'} />
     </form>
     

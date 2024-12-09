@@ -3,9 +3,9 @@ import {useDispatch,useSelector} from 'react-redux';
 import { CreateUser } from '../store/user/action';
 import { Bottom } from './shared/Bottom';
 import { Button } from './shared/Button';
+import { ErrorMessage } from './shared/ErrorMessage';
 import { Heading } from './shared/Heading';
 import { InputBox } from './shared/InputBox';
-import SignIn from './SignIn';
 
 
 
@@ -40,6 +40,7 @@ const SignUp = () => {
         onSubmit={handleSubmit}
         >
           <Heading label={"Sign-up"}/>
+          <ErrorMessage message={error ? error.message:null}/>
           <InputBox label={"First Name"} 
                     placeholder={"Enter your first name"}
                     type={"text"}
