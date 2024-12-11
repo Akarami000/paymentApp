@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import { CreateUser, LoginUser } from './action';
+import { CreateUser, LoginUser } from './action.js';
 
 const initialState = {
     user:null,
@@ -10,7 +10,11 @@ const initialState = {
 const userSlice = createSlice({
     name:'user',
     initialState,
-    reducers:{},
+    reducers:{
+        clearError(state) {
+            state.error = null;
+        },
+    },
     extraReducers:(builder)=>{
         builder.addCase(CreateUser.pending,(state)=>{
             state.loading=true;
@@ -35,6 +39,8 @@ const userSlice = createSlice({
         })
     }
 })
+
+export const {clearError} = userSlice.actions;
 
 export default userSlice.reducer;
 

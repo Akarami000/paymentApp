@@ -1,6 +1,7 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import {useDispatch,useSelector} from 'react-redux';
-import { CreateUser } from '../store/user/action';
+import { CreateUser } from '../store/user/action.js';
+import { clearError } from '../store/user/reducer';
 import { Bottom } from './shared/Bottom';
 import { Button } from './shared/Button';
 import { ErrorMessage, SideErrorMessage } from './shared/ErrorMessage';
@@ -11,6 +12,9 @@ import { InputBox } from './shared/InputBox';
 
 const SignUp = () => {
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(clearError());
+    }, [dispatch]);
     const {loading,error,user} = useSelector((state)=>state.user);
 
 

@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Bottom } from './shared/Bottom';
 import { Button } from './shared/Button';
 import { Heading } from './shared/Heading';
 import { InputBox } from './shared/InputBox';
 import {useDispatch,useSelector} from 'react-redux';
-import { LoginUser } from '../store/user/action';
+import { LoginUser } from '../store/user/action.js';
 import { ErrorMessage,SideErrorMessage } from './shared/ErrorMessage';
+import { clearError } from '../store/user/reducer.js';
 
 const SignIn = () => {
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(clearError());
+    }, [dispatch]);
     const {loading,error,user} = useSelector((state)=>state.user);
     const [formData,setFromData] = useState({
         email:'',
