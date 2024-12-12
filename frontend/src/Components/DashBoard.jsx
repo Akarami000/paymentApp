@@ -24,7 +24,7 @@ const DashBoard = () => {
       <div className="flex space-x-4 mb-6">
         <input
           type="text"
-          placeholder="Payment History"
+          placeholder="find user by id"
           className="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
