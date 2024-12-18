@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const JWTTOKEN = config.get('jwtSecret');
 const jwtVerify = require('../../middleware/jwtVerify');
 const User = require('../../models/User');
 const Account = require('../../models/Account');

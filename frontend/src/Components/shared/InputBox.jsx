@@ -1,4 +1,4 @@
-export const InputBox =({label,data,method,type,id,name,placeholder})=>{
+export const InputBox =({label,data,onChange,type,id,name,placeholder})=>{
     return(
         <div className="mb-4">
         <label htmlFor="firstName" className="block text-gray-600 font-medium mb-2">
@@ -11,7 +11,7 @@ export const InputBox =({label,data,method,type,id,name,placeholder})=>{
           placeholder={placeholder}
           name={name}
           value={data}
-          onChange = {method}
+          onChange = {onChange}
         />
       </div>
     )
