@@ -1,2 +1,2 @@
 
-## Build a basic version of PayTM
+## Build a payment app to understand payment logic 
