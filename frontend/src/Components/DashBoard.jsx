@@ -1,13 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserBalance, fetchUserDetails } from '../store/user/action';
+import { InputBox } from './shared/InputBox';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { persistor } from '../store/user/store.js'; // Import the persistor from your store setup
 
 const DashBoard = () => {
-  // Dummy user data
-  const users = [
-    { id: 1, name: 'John Doe', amountPaid: '$150' },
-    { id: 2, name: 'Jane Smith', amountPaid: '$200' },
-    { id: 3, name: 'Alice Johnson', amountPaid: '$50' },
-    { id: 4, name: 'Bob Brown', amountPaid: '$120' },
-  ];
+  const [searchWithUserID, setSearchWithUserID] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize navigate
+  const { user, balance, loading, error } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!user) {
+      dispatch(fetchUserDetails());
+    }
+
+    if (!balance) {
+      dispatch(fetchUserBalance());
+    }
+  }, [dispatch, user, balance]);
+
+  const handleLogout = () => {
+    // Clear localStorage
+    localStorage.clear();
+
+    // Purge persisted state
+    persistor.purge();
+
+    // Redirect to sign-in page
+    navigate('/sign-in');
+  };
+
+  const handleChange = (e) => {
+    setSearchWithUserID(e.target.value);
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.msg || "An unexpected error occurred"}</p>;
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
@@ -16,35 +47,36 @@ const DashBoard = () => {
       </div>
       <div className="text-lg text-gray-700 mb-4">
         <span>Your Balance: </span>
-        <span className="font-bold text-green-500">$1000</span>
+        <span className="font-bold text-green-500">{balance}</span>
       </div>
       <div className="text-xl text-gray-700 mb-4">
-        <label className="font-semibold">User</label>
+        <label className="font-semibold">
+          {user?.firstName} {user?.lastName}
+        </label>
       </div>
+      <button
+        onClick={handleLogout}
+        className="absolute top-4 right-4 bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"        >
+        Logout
+      </button>
       <div className="flex space-x-4 mb-6">
-        <input
-          type="text"
-          placeholder="find user by id"
-          className="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        <InputBox
+          label={"Search user by ID"}
+          placeholder={"enter user ID"}
+          type={"searchWithUserID"}
+          id={"searchWithUserID"}
+          name={'searchWithUserID'}
+          data={searchWithUserID}
+          onChange={handleChange}
         />
         <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
           Pay
         </button>
       </div>
-
-      {/* Displaying list of users */}
       <div className="w-full max-w-md">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Users Who Paid</h2>
         <ul className="space-y-4">
-          {users.map(user => (
-            <li key={user.id} className="bg-white p-4 rounded-lg shadow-md">
-              <div className="flex justify-between">
-                <span className="font-semibold text-gray-700">{user.name}</span>
-                <span className="text-green-500">{user.amountPaid}</span>
-              </div>
-              <div className="text-gray-600">User: I have paid</div>
-            </li>
-          ))}
+          {/* Render users list here */}
         </ul>
       </div>
     </div>

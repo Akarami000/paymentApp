@@ -59,7 +59,7 @@ const SignUp = () => {
                     id={"firstName"} 
                     name={'firstName'} 
                     data={formData.firstName} 
-                    method={handleChange} />
+                    onChange={handleChange} />
     <SideErrorMessage
         message={
             error && error.errors
@@ -72,7 +72,7 @@ const SignUp = () => {
                     id={"lastName"} 
                     name={'lastName'} 
                     data={formData.lastName}
-                    method={handleChange} />
+                    onChange={handleChange} />
 
         <SideErrorMessage
             message={
@@ -85,7 +85,7 @@ const SignUp = () => {
                     type={"email"}
                     id={"email"} 
                     name={'email'} 
-                    data={formData.email} method={handleChange} />
+                    data={formData.email} onChange={handleChange} />
         <SideErrorMessage
             message={
                 error && error.errors
@@ -97,7 +97,7 @@ const SignUp = () => {
                     type={"password"}
                     id={"password"} 
                     name={'password'} 
-                    data={formData.password} method={handleChange} />
+                    data={formData.password} onChange={handleChange} />
 
         <Button loading={loading} loadingValue ={"Creating user ..."} signUp={"Sign-up"}  /> 
        <Bottom message= {"Already have account ?"} name={"Sign-In"} link={'/sign-in'} />

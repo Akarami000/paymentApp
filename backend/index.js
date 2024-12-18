@@ -22,7 +22,16 @@ async function startServer(){
       // const server = new ApolloServer({typeDefs,resolver});
       // await server.start(); // Ensure the server starts before applying middleware
       // server.applyMiddleware({app,path:'/gql'});
-      const PORT  = 8000;
+      if(process.env.NODE_ENV === 'production'){
+            //Set static folder
+            app.use(express.static('frontend/dist'));
+      
+            app.get('*',(req,res)=>{
+                  res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'));
+            });
+       } 
+      
+      const PORT = process.env.PORT || 8000;
       app.listen(PORT,()=>{
          console.log(`server starts on port ${PORT}`)
       //   console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`)
