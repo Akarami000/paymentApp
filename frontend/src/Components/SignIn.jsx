@@ -7,7 +7,7 @@ import { InputBox } from './shared/InputBox';
 import {useDispatch,useSelector} from 'react-redux';
 import { LoginUser,fetchUserDetails } from '../store/user/action.js';
 import { ErrorMessage,SideErrorMessage } from './shared/ErrorMessage';
-import { clearError } from '../store/user/reducer.js';
+import { clearError,clearUserState } from '../store/user/reducer.js';
 import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
@@ -31,6 +31,7 @@ const SignIn = () => {
     const handleSubmit=(e)=>{
         e.preventDefault();
         const userData = formData;
+        dispatch(clearUserState());
         dispatch(LoginUser(userData))
         .unwrap() //he .unwrap() method lets you work with the raw value of the Promise (i.e., the payload or error) rather than the action object.
         .then((res) => {

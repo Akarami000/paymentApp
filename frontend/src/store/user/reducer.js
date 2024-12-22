@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import { CreateUser, LoginUser,fetchUserBalance,fetchUserDetails  } from './action.js';
+import { CreateUser, LoginUser,fetchUserBalance,fetchUserDetails ,fetchFilterUser, transferBalance } from './action.js';
 
 const initialState = {
     user:null,
@@ -7,6 +7,8 @@ const initialState = {
     token:null,
     loading:false,
     error:null,
+    findUser:null,
+    payUser:null,
 };
 
 const userSlice = createSlice({
@@ -18,7 +20,16 @@ const userSlice = createSlice({
         },
         setToken(state,action){
             state.token = action.payload; //this is to store JWT token
-        }
+        },
+      
+    clearUserState(state) {
+        state.user = null;
+        state.balance = null;
+        state.token = null;
+        state.error = null;
+        state.findUser = null;
+        state.payUser = null;
+      },
     },
     extraReducers:(builder)=>{
         //for sing-up
@@ -69,10 +80,35 @@ const userSlice = createSlice({
             state.error = action.payload;
             
         })
+
+          //fetchUserUser 
+        builder.addCase(fetchFilterUser.pending,(state)=>{
+            state.loading = true;
+            state.error = null ;
+        }).addCase(fetchFilterUser.fulfilled,(state,action)=>{
+            state.loading = false;
+            state.findUser = action.payload; //udate balance only
+        }).addCase(fetchFilterUser.rejected,(state,action)=>{
+            state.loading = false;
+            state.error = action.payload;
+            
+        })
+
+        //transferAmountToUser
+        builder.addCase(transferBalance.pending,(state)=>{
+            state.loading=true;
+            state.error=null
+        }).addCase(transferBalance.fulfilled,(state,action)=>{
+            state.loading=false;
+            state.payUser=action.payload;
+        }).addCase(transferBalance.rejected,(state,action)=>{
+            state.loading= false;
+            state.error= action.payload;
+        })
     }
 })
 
-export const {clearError} = userSlice.actions;
+export const {clearError,clearUserState} = userSlice.actions;
 
 export default userSlice.reducer;
 
