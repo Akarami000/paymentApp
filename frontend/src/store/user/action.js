@@ -24,7 +24,7 @@ export const LoginUser = createAsyncThunk('user/validateUser',async(userData,{re
     }
 })
 
-export const fetchUserDetails = createAsyncThunk('user/fetchUserDetails',async(_,{getState,rejectWithValue})=>{
+export const fetchUserDetails = createAsyncThunk('user/fetchUserDetails',async(_,{rejectWithValue})=>{
     const token= localStorage.getItem('bearerToken')
     try{
         const response = await axios.get(`${BASE_URL}/users/user`,{
@@ -40,7 +40,7 @@ export const fetchUserDetails = createAsyncThunk('user/fetchUserDetails',async(_
     }
 })
 
-export const fetchUserBalance = createAsyncThunk('user/fetchUserBalance',async(_,{getState,rejectWithValue})=>{
+export const fetchUserBalance = createAsyncThunk('user/fetchUserBalance',async(_,{rejectWithValue})=>{
     const token= localStorage.getItem('bearerToken')
     try{
         const response = await axios.get(`${BASE_URL}/users/balance`,{
@@ -52,5 +52,34 @@ export const fetchUserBalance = createAsyncThunk('user/fetchUserBalance',async(_
     }
     catch(error){
         return rejectWithValue(error.response.data || "can't able to fetch Balance");
+    }
+})
+
+export const fetchFilterUser = createAsyncThunk('user/fetFilterUser',async(filter,{rejectWithValue})=>{
+    try{
+        const response = await axios.get(`${BASE_URL}/users/find-user`, {
+            params: { filter }, // Add query parameters here
+          });
+          return response.data;
+    }
+    catch(error){
+        return rejectWithValue(error.response?.data || "fail to fetch Filter data");
+    }
+})
+
+
+export const transferBalance = createAsyncThunk('user/transfer/',async(userDetails,{rejectWithValue})=>{
+    const token= localStorage.getItem('bearerToken')
+    try{
+        const response = await axios.post(`${BASE_URL}/users/transfer`,userDetails,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json', // Ensure the Content-Type header is included
+            },
+        })
+        return response.data;
+    }
+    catch(error){
+
     }
 })
