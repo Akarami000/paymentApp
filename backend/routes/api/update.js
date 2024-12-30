@@ -3,7 +3,7 @@ const router = express.Router();
 const jwtVerify = require("../../middleware/jwtVerify");
 const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // Update user 
 router.put('/update-user', [
