@@ -6,7 +6,7 @@ const jwtVerify = require('../../middleware/jwtVerify');
 const User = require('../../models/User');
 const Account = require('../../models/Account');
 const {check,validationResult}= require('express-validator');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const authMiddleWare = require('../../middleware/authMiddleware');
 const mongoose = require('mongoose');
 
