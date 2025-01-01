@@ -6,8 +6,16 @@ phases:
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 084828562320.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
-      - echo Building the Docker image...
-      - docker build -t backend-service .
+      # Backend service
+      - echo Building the Docker image for the backend service...
+      - docker build -t backend-service ./backend
       - docker tag backend-service:latest 084828562320.dkr.ecr.us-east-1.amazonaws.com/backend-service:latest
-      - echo Pushing the Docker image to ECR...
+      - echo Pushing the Docker image for the backend service to ECR...
       - docker push 084828562320.dkr.ecr.us-east-1.amazonaws.com/backend-service:latest
+      
+      # Frontend service
+      - echo Building the Docker image for the frontend service...
+      - docker build -t frontend-service ./frontend
+      - docker tag frontend-service:latest 084828562320.dkr.ecr.us-east-1.amazonaws.com/frontend-service:latest
+      - echo Pushing the Docker image for the frontend service to ECR...
+      - docker push 084828562320.dkr.ecr.us-east-1.amazonaws.com/frontend-service:latest
