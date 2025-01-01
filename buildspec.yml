@@ -1,0 +1,13 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 084828562320.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t backend-service .
+      - docker tag backend-service:latest 084828562320.dkr.ecr.us-east-1.amazonaws.com/backend-service:latest
+      - echo Pushing the Docker image to ECR...
+      - docker push 084828562320.dkr.ecr.us-east-1.amazonaws.com/backend-service:latest
