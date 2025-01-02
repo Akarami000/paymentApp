@@ -13,6 +13,8 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 084828562320.dkr.ecr.us-east-1.amazonaws.com
+      - echo Pulling MongoDB image to avoid rate limits...
+      - docker pull mongo:4.4.7  # Ensure MongoDB image is pulled to prevent Docker Hub rate limits
   build:
     commands:
       # Backend service
@@ -40,4 +42,4 @@ phases:
       - kubectl apply -f k8s/frontend-service.yaml
 artifacts:
   files:
-    - "**/*"
+    - "**/*"  # Adjust if you need specific artifacts
