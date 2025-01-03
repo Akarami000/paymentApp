@@ -6,6 +6,7 @@ eb_codebuild_settings:
   Image: aws/codebuild/eb-nodejs-6.10.0-amazonlinux-64:4.0.0
   artifact_name: app.zip
   deployment_package: true
+service-role: arn:aws:iam::AKIARHQBNEOIHXPXCREC:role/codebuild-service-role
 phases:
   build:
     commands:
