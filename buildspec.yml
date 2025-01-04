@@ -6,23 +6,23 @@ eb_codebuild_settings:
   Image: aws/codebuild/eb-nodejs-6.10.0-amazonlinux-64:4.0.0
   artifact_name: app.zip
   deployment_package: true
-service-role: arn:aws:iam::084828562320:role/codebuild-service-role
+  service-role: arn:aws:iam::084828562320:role/codebuild-service-role  
 phases:
   build:
     commands:
-      - echo "Building the Docker image for the backend service..."
+      - echo Building the Docker image for the backend service...
       - docker build -t backend-service ./backend
       - docker tag backend-service:latest 084828562320.dkr.ecr.us-east-1.amazonaws.com/backend-service:latest
-      - echo "Pushing the Docker image for the backend service to ECR..."
+      - echo Pushing the Docker image for the backend service to ECR...
       - docker push 084828562320.dkr.ecr.us-east-1.amazonaws.com/backend-service:latest
-      - echo "Building the Docker image for the frontend service..."
+      - echo Building the Docker image for the frontend service...
       - docker build -t frontend-service ./frontend
       - docker tag frontend-service:latest 084828562320.dkr.ecr.us-east-1.amazonaws.com/frontend-service:latest
-      - echo "Pushing the Docker image for the frontend service to ECR..."
+      - echo Pushing the Docker image for the frontend service to ECR...
       - docker push 084828562320.dkr.ecr.us-east-1.amazonaws.com/frontend-service:latest
   install:
     commands:
-      - echo "Installing necessary tools..."
+      - echo Installing necessary tools...
       - aws --version
       - curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
       - chmod +x ./kubectl
@@ -31,18 +31,18 @@ phases:
       docker: latest
   post_build:
     commands:
-      - echo "Configuring kubectl for EKS..."
+      - echo Configuring kubectl for EKS...
       - aws eks update-kubeconfig --region us-east-1 --name my-cluster
-      - echo "Deploying backend to Kubernetes..."
+      - echo Deploying backend to Kubernetes...
       - kubectl apply -f k8s/backend-deployment.yaml
       - kubectl apply -f k8s/backend-service.yaml
-      - echo "Deploying frontend to Kubernetes..."
+      - echo Deploying frontend to Kubernetes...
       - kubectl apply -f k8s/frontend-deployment.yaml
       - kubectl apply -f k8s/frontend-service.yaml
   pre_build:
     commands:
-      - echo "Logging in to Amazon ECR..."
+      - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 084828562320.dkr.ecr.us-east-1.amazonaws.com
-      - echo "Pulling MongoDB image to avoid rate limits..."
+      - echo Pulling MongoDB image to avoid rate limits...
       - docker pull mongo:4.4.7
 version: 0.2
