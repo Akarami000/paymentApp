@@ -20,6 +20,8 @@ COPY . .
 # Expose the port your app runs on
 EXPOSE 8000
 
+FROM 084828562320.dkr.ecr.us-east-1.amazonaws.com/mongo:4.4.7
+
 # Set the environment variable to production
 ENV NODE_ENV=production
 
