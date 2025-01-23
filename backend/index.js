@@ -13,7 +13,7 @@ const app = express();
 const corsOptions = {
   origin: [
     'http://localhost:3000', // Local development frontend
-    'http://a954cecfc0f3e4bb2a19b1b74a930871-916292411.us-east-1.elb.amazonaws.com', // Deployed frontend
+    'http://eb-env-3.eba-ztd36g3v.us-east-1.elasticbeanstalk.com', // Deployed frontend
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Include cookies or credentials
