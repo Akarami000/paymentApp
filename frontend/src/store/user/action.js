@@ -1,7 +1,8 @@
 import { createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL= "http://localhost:8000/api"
+// const BASE_URL= "http://localhost:8000/api"
+const BASE_URL= "http://eb-env-3.eba-ztd36g3v.us-east-1.elasticbeanstalk.com"
 
 //this is the action created using AsyncThunk for Sign-up
 export const CreateUser = createAsyncThunk('user/fetchUser',async(userData,{rejectWithValue})=>{
