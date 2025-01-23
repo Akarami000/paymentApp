@@ -16,6 +16,13 @@ spec:
       - name: backend
         image: 084828562320.dkr.ecr.us-east-1.amazonaws.com/backend-service:latest
         imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
         ports:
         - containerPort: 8000
 ---

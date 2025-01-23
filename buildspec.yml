@@ -16,6 +16,7 @@ phases:
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 084828562320.dkr.ecr.us-east-1.amazonaws.com
       - echo Pulling MongoDB image to avoid rate limits...
       - docker pull mongo:4.4.7
+      - docker login -u akshaypariyar -p Billionaire1998@
   install:
     commands:
       - echo Installing necessary tools...
